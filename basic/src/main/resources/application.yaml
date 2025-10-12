@@ -3,6 +3,15 @@
 ######################################################################################################
 allowed_origins: ${ALLOWED_ORIGINS}
 
+server:
+  port: ${SERVER_PORT}
+  servlet:
+    context-path: ${SERVER_SERVLET_CONTEXT_PATH}
+    encoding:
+      charset: ${SERVER_SERVLET_ENCODING_CHARSET}
+      enabled: ${SERVER_SERVLET_ENCODING_ENABLED}
+      force: ${SERVER_SERVLET_ENCODING_FORCE}
+
 #-----------------------------------------------------------------------------------------------------
 # spring
 #-----------------------------------------------------------------------------------------------------
@@ -17,7 +26,20 @@ spring:
     driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
     dialect: ${SPRING_DATASOURCE_DIALECT}
 
-  # JPA 설정
+  mvc:
+    view:
+      prefix: ${SPRING_MVC_VIEW_PREFIX}
+      suffix: ${SPRING_MVC_VIEW_SUFFIX}
+
   jpa:
+    properties:
+      hibernate:
+        format_sql: ${SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL}
+    open-in-view: ${SPRING_JPA_OPEN_IN_VIEW}
+    database: ${SPRING_JPA_DATABASE}
+    show-sql: ${SPRING_JPA_SHOW_SQL}
+    generate-ddl: ${SPRING_JPA_GENERATE_DDL}
     hibernate:
       ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    jdbc:
+      time_zone: ${SPRING_JACKSON_TIME_ZONE}
