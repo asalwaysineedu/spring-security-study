@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -25,6 +26,11 @@ public class SecurityConfig {
     // 스프링 시큐리티는 “자동 설정(Auto Configuration)”을 제공하지만,
     // 실제 서비스에서는 거의 항상 인증(Authentication), 인가(Authorization),
     // 필터(Filtering) 규칙 등을 직접 커스터마이징 해야하기 때문임
+
+    @Bean
+    public BCryptPasswordEncoder encodePwd() {
+        return new BCryptPasswordEncoder();
+    }
 
     // 🍀🍀🍀 filterChain 🍀🍀🍀
     // 특정 HTTP 요청에 대한 웹 기반 보안 구성
@@ -57,7 +63,9 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
                 .formLogin(form -> form
-                        .loginPage("/login"));
+                        .loginPage("/loginForm")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/"));
 
         return http.build();
     }
